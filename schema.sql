@@ -91,3 +91,44 @@ VALUES
 ('SG808', 3, 2, 1, '2026-03-02 19:00:00', '2026-03-02 21:00:00', 'A6', 'Scheduled', 'Domestic'),
 ('EK909', 4, 3, 4, '2026-03-02 23:00:00', '2026-03-03 04:00:00', 'B3', 'Scheduled', 'International'),
 ('LH010', 5, 1, 5, '2026-03-03 07:00:00', '2026-03-03 13:00:00', 'B4', 'Scheduled', 'International');
+
+DELIMITER $$
+
+CREATE PROCEDURE generate_flights()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE dep DATETIME;
+
+    WHILE i <= 200 DO
+
+        SET dep = DATE_ADD('2026-03-01 00:00:00', INTERVAL i HOUR);
+
+        INSERT INTO Flights
+        (flight_number, airline_id, origin_airport_id, destination_airport_id,
+         departure_time, arrival_time, gate, status, flight_type)
+        VALUES
+        (
+            CONCAT('FL', LPAD(i, 3, '0')),
+            FLOOR(1 + RAND()*5),
+            FLOOR(1 + RAND()*5),
+            FLOOR(1 + RAND()*5),
+            dep,
+            DATE_ADD(dep, INTERVAL (1 + FLOOR(RAND()*5)) HOUR),
+            CONCAT('G', FLOOR(1 + RAND()*20)),
+            'Scheduled',
+            IF(RAND() > 0.7, 'International', 'Domestic')
+        );
+
+        SET i = i + 1;
+    END WHILE;
+END$$
+
+DELIMITER ;
+
+CALL generate_flights();
+
+CALL generate_flights();
+
+DELETE FROM Flights WHERE flight_id <= 10;
+
+SELECT COUNT(*) FROM Flights;
