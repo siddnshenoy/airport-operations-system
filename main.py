@@ -5,5 +5,7 @@ def test_connection():
     for f in flights:
         print(f)
 
+from passenger_module import passenger_entry_flow
+
 if __name__ == "__main__":
-    test_connection()
+    passenger_entry_flow()
