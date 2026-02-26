@@ -60,3 +60,34 @@ CREATE TABLE Crew (
     shift_end DATETIME,
     FOREIGN KEY (department_id) REFERENCES Departments(department_id)
 );
+
+USE airport_db;
+
+INSERT INTO Airlines (name) VALUES
+('Air India'),
+('IndiGo'),
+('SpiceJet'),
+('Emirates'),
+('Lufthansa');
+
+INSERT INTO Airports (name, city) VALUES
+('Chhatrapati Shivaji International', 'Mumbai'),
+('Indira Gandhi International', 'Delhi'),
+('Kempegowda International', 'Bangalore'),
+('Dubai International', 'Dubai'),
+('Frankfurt International', 'Frankfurt');
+
+INSERT INTO Flights
+(flight_number, airline_id, origin_airport_id, destination_airport_id,
+ departure_time, arrival_time, gate, status, flight_type)
+VALUES
+('AI101', 1, 1, 2, '2026-03-01 14:00:00', '2026-03-01 16:00:00', 'A1', 'Scheduled', 'Domestic'),
+('6E202', 2, 2, 3, '2026-03-01 18:00:00', '2026-03-01 20:00:00', 'A2', 'Scheduled', 'Domestic'),
+('SG303', 3, 3, 1, '2026-03-01 22:00:00', '2026-03-02 00:00:00', 'A3', 'Scheduled', 'Domestic'),
+('EK404', 4, 1, 4, '2026-03-02 05:00:00', '2026-03-02 08:00:00', 'B1', 'Scheduled', 'International'),
+('LH505', 5, 2, 5, '2026-03-02 09:00:00', '2026-03-02 14:00:00', 'B2', 'Scheduled', 'International'),
+('AI606', 1, 3, 2, '2026-03-02 11:00:00', '2026-03-02 13:00:00', 'A4', 'Scheduled', 'Domestic'),
+('6E707', 2, 1, 3, '2026-03-02 15:00:00', '2026-03-02 17:00:00', 'A5', 'Scheduled', 'Domestic'),
+('SG808', 3, 2, 1, '2026-03-02 19:00:00', '2026-03-02 21:00:00', 'A6', 'Scheduled', 'Domestic'),
+('EK909', 4, 3, 4, '2026-03-02 23:00:00', '2026-03-03 04:00:00', 'B3', 'Scheduled', 'International'),
+('LH010', 5, 1, 5, '2026-03-03 07:00:00', '2026-03-03 13:00:00', 'B4', 'Scheduled', 'International');
