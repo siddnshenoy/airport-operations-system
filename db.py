@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 def get_connection():
     return mysql.connector.connect(
         host="localhost",
@@ -7,6 +8,7 @@ def get_connection():
         password="root",
         database="airport_db"
     )
+
 
 def execute_query(query, params=None, fetch=False):
     conn = get_connection()
@@ -20,4 +22,6 @@ def execute_query(query, params=None, fetch=False):
         return result
 
     conn.commit()
+    last_id = cursor.lastrowid
     conn.close()
+    return last_id

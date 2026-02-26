@@ -1,5 +1,6 @@
 from db import execute_query
 from datetime import datetime, timedelta
+from boarding_pass import generate_boarding_pass
 
 
 def get_flight_by_number(flight_number):
@@ -21,16 +22,11 @@ def is_seat_taken(flight_id, seat_number):
 
 
 def create_passenger(name, phone):
-    execute_query(
+    passenger_id = execute_query(
         "INSERT INTO Passengers (full_name, phone, entry_time) VALUES (%s, %s, %s)",
         (name, phone, datetime.now())
     )
-
-    result = execute_query(
-        "SELECT LAST_INSERT_ID() as id",
-        fetch=True
-    )
-    return result[0]["id"]
+    return passenger_id
 
 
 def create_ticket(passenger_id, flight_id, seat_number):
@@ -84,5 +80,8 @@ def passenger_entry_flow():
     passenger_id = create_passenger(name, phone)
     create_ticket(passenger_id, flight["flight_id"], seat)
 
+    passenger = {"full_name": name}
+    file_path = generate_boarding_pass(passenger, flight, seat)
+
     print("Passenger entry successful.")
-    print("Boarding pass will be generated in next stage.")
+    print(f"Boarding pass generated at: {file_path}")
